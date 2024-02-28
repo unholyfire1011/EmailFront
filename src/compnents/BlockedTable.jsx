@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
+import LoadingComponent from './LoadingComponent';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
 const BlockedTable = ({ data }) => {
   const userId = localStorage.getItem('userId');
+  const [loading, setLoading] = useState("False");
+
   const styles = {
     para: {
       whiteSpace: "nowrap",
@@ -21,20 +24,25 @@ const BlockedTable = ({ data }) => {
   const Navigate = useNavigate();
 
   function handleRestore(event, id, User) {
+    setLoading("");
     const userId = localStorage.getItem('userId');
     axios.post('https://emailback-5jmh.onrender.com/restoreBlocked', { id, User, userId }).then(res => {
       if (res.status != 200) {
+        setLoading("False");
         alert(res.data)
       } else {
+        setLoading("False");
         alert(res.data);
         Navigate('/inbox');
       }
     }).catch(err => {
+      setLoading("False");
       alert("Could Not Restore This Inbox Back To Inbox At The Moment!! Please Try Again Later")
     })
   }
 
   let content;
+
 
   if (adata.length == 0) {
     content = <table>
@@ -75,13 +83,20 @@ const BlockedTable = ({ data }) => {
     </table>
   }
 
-  return (
-    <>
-     {
-      content
-    }
-    </>
-  )
+  if (loading === "") {
+    return (
+      <LoadingComponent></LoadingComponent>
+    )
+  } else {
+
+    return (
+      <>
+        {
+          content
+        }
+      </>
+    )
+  }
 }
 
 export default BlockedTable

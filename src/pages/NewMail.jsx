@@ -27,7 +27,7 @@ const NewMail = () => {
     }
     return (
         <div style={styles.wrapper}>
-      
+
         <main style={styles.main}>    
         <div className='newWrapper'>
           <SendMail></SendMail>

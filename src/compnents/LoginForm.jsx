@@ -1,12 +1,15 @@
 import React from 'react'
+import LoadingComponent from './LoadingComponent';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios'
+
 
 const LoginForm = ({ children }) => {
   const [uname, setUname] = useState("");
   const [pass, setPass] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState("False");
   const Navigate = useNavigate();
 
   const styles = {
@@ -101,49 +104,59 @@ const LoginForm = ({ children }) => {
   }, []);
 
   const handleSubmit = (event) => {
+    setLoading("");
     event.preventDefault();
     axios.post('https://emailback-5jmh.onrender.com/login', { uname, pass }).then(res => {
       if (res.status != 200) {
         alert(res.data)
+        setLoading("False");
       } else {
         if (rememberMe) {
           localStorage.setItem('rememberedUsername', uname);
         } else {
           localStorage.removeItem('rememberedUsername');
         }
+        setLoading("False");
         const id = res.data;
         localStorage.setItem('userId', id)
         Navigate('/inbox');
       }
     })
   }
+  
+  if(loading === ""){
+    return(
+      <LoadingComponent></LoadingComponent>
+    )
+  }else{
+    return (
+      <div>
+        <form onSubmit={handleSubmit}>
+          <h1 style={styles.wrapperh1}>SafeMail.</h1>
+          <h5 style={styles.wrapperh5}>Login</h5>
+          <div className='input-box' style={styles.wrapperInputBox}>
+            <input type='text' style={styles.inputBoxInput} placeholder='Registered Email Id' value={uname} onChange={(e) => setUname(e.target.value)} required></input>
+            <i class='bx bxs-user' style={styles.inputBoxI}></i>
+          </div>
+          <div className='input-box' style={styles.wrapperInputBox}>
+            <input type='password' style={styles.inputBoxInput} placeholder='Password' value={pass} onChange={(e) => setPass(e.target.value)} required></input>
+            <i class='bx bxs-lock-alt ' style={styles.inputBoxI}></i>
+          </div>
+          <div className='remember-forgot' style={styles.wrapperrememberforgot}>
+            <label>
+              <input type="checkbox" style={styles.rememberforgotlabelinput} checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />Remember me?
+            </label>
+            <a style={styles.rememberforgota}><Link to="/forgot-password">Forgot Password</Link></a>
+          </div>
+          <button type='submit' className='button' style={styles.wrapperbutton}>Submit</button>
+          <div className="register-link" style={styles.wrapperregisterlink}>
+            <p style={styles.registerlinkpa}>Don't have an account? <Link to='/register'>Register</Link></p>
+          </div>
+        </form>
+      </div>
+    )
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h1 style={styles.wrapperh1}>SafeMail.</h1>
-        <h5 style={styles.wrapperh5}>Login</h5>
-        <div className='input-box' style={styles.wrapperInputBox}>
-          <input type='text' style={styles.inputBoxInput} placeholder='Registered Email Id' value={uname} onChange={(e) => setUname(e.target.value)} required></input>
-          <i class='bx bxs-user' style={styles.inputBoxI}></i>
-        </div>
-        <div className='input-box' style={styles.wrapperInputBox}>
-          <input type='password' style={styles.inputBoxInput} placeholder='Password' value={pass} onChange={(e) => setPass(e.target.value)} required></input>
-          <i class='bx bxs-lock-alt ' style={styles.inputBoxI}></i>
-        </div>
-        <div className='remember-forgot' style={styles.wrapperrememberforgot}>
-          <label>
-            <input type="checkbox" style={styles.rememberforgotlabelinput} checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />Remember me?
-          </label>
-          <a style={styles.rememberforgota}><Link to="/forgot-password">Forgot Password</Link></a>
-        </div>
-        <button type='submit' className='button' style={styles.wrapperbutton}>Submit</button>
-        <div className="register-link" style={styles.wrapperregisterlink}>
-          <p style={styles.registerlinkpa}>Don't have an account? <Link to='/register'>Register</Link></p>
-        </div>
-      </form>
-    </div>
-  )
+  }
 }
 
 export default LoginForm

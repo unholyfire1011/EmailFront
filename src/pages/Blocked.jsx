@@ -1,4 +1,5 @@
 import React from 'react'
+import LoadingComponent from '../compnents/LoadingComponent'
 import BlockedTable from '../compnents/BlockedTable'
 import NavBar from '../compnents/NavBar'
 import axios from 'axios'
@@ -9,13 +10,18 @@ import { useEffect, useState } from 'react'
 const Blocked = () => {
 
     const [data, setData] = useState("");
+    const [loading, setLoading] = useState("False")
+
     const id = localStorage.getItem('userId');
     useEffect(()=>{
+      setLoading("");
       axios.post('https://emailback-5jmh.onrender.com/fetchBlockedData', {id}).then(res=>{
         if(res.status != 200){
-          console.log("Empty String")
+          setLoading("False");
+          console.log("Empty String");
         }else{
-        setData(res.data)
+          setLoading("False");
+          setData(res.data)
         }
       })
     }, [])
@@ -32,14 +38,21 @@ const Blocked = () => {
           textAlign: "center"
         }
       }  
-  return (
-    <main style={styles.main}>
-      <NavBar></NavBar>
-      <br></br>
-      <h1 style={styles.h1}>Blocked</h1>
-      <BlockedTable data={data}></BlockedTable>
-    </main>
-  )
+
+      if(loading === ""){
+        return(
+          <LoadingComponent></LoadingComponent>
+        )
+      }else{
+        return (
+          <main style={styles.main}>
+            <NavBar></NavBar>
+            <br></br>
+            <h1 style={styles.h1}>Blocked</h1>
+            <BlockedTable data={data}></BlockedTable>
+          </main>
+        )
+      }
 }
 
 export default Blocked

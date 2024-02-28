@@ -7,29 +7,21 @@ const LoadingComponent = () => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      minHeight: "100vh",
       background: "url('img.jpg')",
-      backgroundRepeat: "no-repeat"
+      backgroundRepeat: "no-repeat",
+      minHeight: "100vh"
     },
-    wrapper:{
-      
-      background: "transparent",
-      border: "2px solid rgba(255, 255, 255, .2)",
-      backdropFilter: "blur(20px)",
-      boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
-      color: "#fff",
-      borderRadius: "20px",
-      padding: "30px 40px",
-      margin: "10px 10px"
+    heading: {
+      color: "#fff"
     }
   }
   return (
     <body style={styles.main}>
-      <div style={styles.wrapper} className="wrapper">
+      <div className="wrapper">
         <div>
           <ReactLoading type="spin" color="#fff" />
            <br />
-           <h6>Loading...</h6>
+           <h6 style={styles.heading}>Loading...</h6>
          </div>
       </div>
     </body>

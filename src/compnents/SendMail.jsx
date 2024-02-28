@@ -1,4 +1,5 @@
 import React from 'react'
+import LoadingComponent from './LoadingComponent'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -14,12 +15,14 @@ const SendMail = () => {
   const [to, setTo] = useState("");
   const [msg, setMsg] = useState("");
   const [file, setFile] = useState("");
+  const [loading, setLoading ] = useState("False")
 
 
   useEffect(()=> {
+    setLoading("");
     axios.post('https://emailback-5jmh.onrender.com/getUser', {id}).then(res=>{
+      setLoading("False");
       setFrom(res.data.mail);
-      console.log(res.data)
     })
   }, [])
 
@@ -95,6 +98,7 @@ const SendMail = () => {
 
 
   const handleSubmit = (event) => {
+    setLoading("");
     event.preventDefault();
     const encryptedData = encryptData(msg);
     const formData = new FormData();
@@ -104,9 +108,11 @@ const SendMail = () => {
     formData.append('file',file);
     axios.post('https://emailback-5jmh.onrender.com/sendMsg', formData).then(res=>{
         if(res.status == 200){
+          setLoading("False");
           alert(res.data);
           Navigate('/sent');
         }else{
+          setLoading("False");
           alert(res.data);
           Navigate('/inbox');
         }
@@ -122,32 +128,37 @@ const handleFile = (event) => {
     alert('Invalid file type. Please upload a JPEG, PNG');
     location.replace(location.href);
  }
-
 }
 
-  return (
-    <div style={styles.div} id="sentDiv">
-      <form onSubmit={handleSubmit}  encType="multipart/form-data">
-      <h5 style={styles.wrapperh5}> Send Mail </h5>
-      <div className='input-box' style={styles.wrapperInputBox}>
-        <input type='text' style={styles.inputBoxInput} value={from}  readOnly></input>
-        <i class='bx bxs-user' style={styles.inputBoxI}></i>
+  if (loading === ""){
+    return(
+      <LoadingComponent></LoadingComponent>
+    )
+  }else{
+    return (
+      <div style={styles.div} id="sentDiv">
+        <form onSubmit={handleSubmit}  encType="multipart/form-data">
+        <h5 style={styles.wrapperh5}> Send Mail </h5>
+        <div className='input-box' style={styles.wrapperInputBox}>
+          <input type='text' style={styles.inputBoxInput} value={from}  readOnly></input>
+          <i class='bx bxs-user' style={styles.inputBoxI}></i>
+        </div>
+        <div className='input-box' style={styles.wrapperInputBox}>
+          <input type='mail' style={styles.inputBoxInput} placeholder='TO:' value={to} onChange={(e) => setTo(e.target.value)} required></input>
+          <i class='bx bxs-envelope' style={styles.inputBoxI}></i>
+        </div>
+          <input type='file' style={styles.inputBoxInput} accept="image/png, image/jpeg" onChange={handleFile}></input>
+          <h6>* Enter a single image(.png, .jpeg) file only</h6>
+        <div className='input-box' style={styles.wrapperInputBox}>
+          <textarea name="paragraph_text" className='inputTextArea' value={msg} onChange={(e) => setMsg(e.target.value)} placeholder='Enter Your Message Here' style={styles.inputTextArea} required></textarea>
+        </div>
+        <div>
+        <button type='submit' style={styles.wrapperbutton} className='button'>Submit</button>
+        </div>
+      </form>
       </div>
-      <div className='input-box' style={styles.wrapperInputBox}>
-        <input type='mail' style={styles.inputBoxInput} placeholder='TO:' value={to} onChange={(e) => setTo(e.target.value)} required></input>
-        <i class='bx bxs-envelope' style={styles.inputBoxI}></i>
-      </div>
-        <input type='file' style={styles.inputBoxInput} accept="image/png, image/jpeg" onChange={handleFile}></input>
-        <h6>* Enter a single image(.png, .jpeg) file only</h6>
-      <div className='input-box' style={styles.wrapperInputBox}>
-        <textarea name="paragraph_text" className='inputTextArea' value={msg} onChange={(e) => setMsg(e.target.value)} placeholder='Enter Your Message Here' style={styles.inputTextArea} required></textarea>
-      </div>
-      <div>
-      <button type='submit' style={styles.wrapperbutton} className='button'>Submit</button>
-      </div>
-    </form>
-    </div>
-  )
+    ) 
+  }
 }
 
 export default SendMail

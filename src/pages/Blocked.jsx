@@ -15,7 +15,7 @@ const Blocked = () => {
     const id = localStorage.getItem('userId');
     useEffect(()=>{
       setLoading("");
-      axios.post('https://emailback-5jmh.onrender.com/fetchBlockedData', {id}).then(res=>{
+      axios.post('https://emailback-ylq9.onrender.com/fetchBlockedData', {id}).then(res=>{
         if(res.status != 200){
           setLoading("False");
           console.log("Empty String");

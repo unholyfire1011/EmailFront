@@ -13,7 +13,7 @@ const Sent = () => {
 
   const id = localStorage.getItem('userId');
   useEffect(() => {
-    axios.post('https://emailback-5jmh.onrender.com/fetchSentData', { id }).then(res => {
+    axios.post('https://emailback-ylq9.onrender.com/fetchSentData', { id }).then(res => {
       if (res.status != 200) {
         console.log("Empty String")
         setLoading("false");

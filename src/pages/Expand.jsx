@@ -20,7 +20,7 @@ const Expand = () => {
 
   const handleSpam = (event, msgId, date, from, msg, file) => {
     setLoading("");
-    axios.post('https://emailback-5jmh.onrender.com/spam', { userId, msgId, date, from, msg, file })
+    axios.post('https://emailback-ylq9.onrender.com/spam', { userId, msgId, date, from, msg, file })
       .then(res => {
         if (res.status !== 200) {
           setLoading("False");
@@ -39,7 +39,7 @@ const Expand = () => {
 
   const handleDelete = (event, id, file) => {
     setLoading("");
-    axios.post('https://emailback-5jmh.onrender.com/deleteMsg', { id, userId, file }).then(res => {
+    axios.post('https://emailback-ylq9.onrender.com/deleteMsg', { id, userId, file }).then(res => {
       if (res.status !== 200) {
         setLoading("False");
         alert(res.data)
@@ -57,7 +57,7 @@ const Expand = () => {
 
   const handleBlock = (event, from, id) => {
     setLoading("");
-    axios.post('https://emailback-5jmh.onrender.com/blockUser', { userId, from, id }).then(res => {
+    axios.post('https://emailback-ylq9.onrender.com/blockUser', { userId, from, id }).then(res => {
       if (res.status != 200) {
         setLoading("False");
         alert(res.data);
@@ -73,7 +73,7 @@ const Expand = () => {
   const handleSpamDelete = (event, id) => {
     setLoading("");
     const userId = localStorage.getItem('userId');
-    axios.post('https://emailback-5jmh.onrender.com/deleteMsgSpam', { id, userId }).then(res => {
+    axios.post('https://emailback-ylq9.onrender.com/deleteMsgSpam', { id, userId }).then(res => {
       if (res.status != 200) {
         setLoading("False");
         alert(res.data);
@@ -93,7 +93,7 @@ const Expand = () => {
   function handleRestore(event, itemId, date, from, msg, file) {
     setLoading("");
     const userId = localStorage.getItem('userId');
-    axios.post('https://emailback-5jmh.onrender.com/restore', { userId, date, from, msg, itemId, file }).then(res => {
+    axios.post('https://emailback-ylq9.onrender.com/restore', { userId, date, from, msg, itemId, file }).then(res => {
       if (res.status != 200) {
         setLoading("False");
         alert(res.data)
@@ -110,7 +110,7 @@ const Expand = () => {
 
   const handleSentDelete = (event, id) => {
     setLoading("");
-    axios.post('https://emailback-5jmh.onrender.com/deleteSentMsg', { id, userId }).then(res => {
+    axios.post('https://emailback-ylq9.onrender.com/deleteSentMsg', { id, userId }).then(res => {
       if (res.status != 200) {
         setLoading("False");
         alert(res.data)
@@ -172,7 +172,7 @@ const Expand = () => {
 
   let attachment;
   if (state.p.item.file) {
-    attachment = <img src={"http://localhost:3001/" + state.p.item.file} style={styles.img}></img>
+    attachment = <img src={"https://emailback-ylq9.onrender.com/" + state.p.item.file} style={styles.img}></img>
   } else {
     attachment = <h6>No attachment</h6>
   }

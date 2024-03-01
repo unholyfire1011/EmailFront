@@ -106,7 +106,7 @@ const LoginForm = ({ children }) => {
   const handleSubmit = (event) => {
     setLoading("");
     event.preventDefault();
-    axios.post('https://emailback-5jmh.onrender.com/login', { uname, pass }).then(res => {
+    axios.post('https://emailback-ylq9.onrender.com/login', { uname, pass }).then(res => {
       if (res.status != 200) {
         alert(res.data)
         setLoading("False");

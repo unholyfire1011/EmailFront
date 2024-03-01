@@ -26,7 +26,7 @@ const BlockedTable = ({ data }) => {
   function handleRestore(event, id, User) {
     setLoading("");
     const userId = localStorage.getItem('userId');
-    axios.post('https://emailback-5jmh.onrender.com/restoreBlocked', { id, User, userId }).then(res => {
+    axios.post('https://emailback-ylq9.onrender.com/restoreBlocked', { id, User, userId }).then(res => {
       if (res.status != 200) {
         setLoading("False");
         alert(res.data)

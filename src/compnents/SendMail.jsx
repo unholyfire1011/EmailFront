@@ -20,7 +20,7 @@ const SendMail = () => {
 
   useEffect(()=> {
     setLoading("");
-    axios.post('https://emailback-5jmh.onrender.com/getUser', {id}).then(res=>{
+    axios.post('https://emailback-ylq9.onrender.com/getUser', {id}).then(res=>{
       setLoading("False");
       setFrom(res.data.mail);
     })
@@ -107,7 +107,7 @@ const SendMail = () => {
     formData.append('encryptedData', encryptedData);
     formData.append('file',file);
 
-    axios.post('http://localhost:3001/sendMsg', formData).then(res=>{
+    axios.post('https://emailback-ylq9.onrender.com/sendMsg', formData).then(res=>{
         if(res.status == 200){
           setLoading("False");
           alert(res.data);

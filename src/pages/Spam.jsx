@@ -12,7 +12,7 @@ const Spam = () => {
   const id = localStorage.getItem('userId');
 
   useEffect(() => {
-    axios.post('https://emailback-5jmh.onrender.com/fetchSpamData', { id }).then(res => {
+    axios.post('https://emailback-ylq9.onrender.com/fetchSpamData', { id }).then(res => {
       if (res.status != 200) {
         console.log("Empty String")
         setLoading("false");

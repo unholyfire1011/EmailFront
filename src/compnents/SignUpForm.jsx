@@ -72,7 +72,7 @@ const SignUpForm = () => {
       alert("password's dont match!");
       return;
     } else {
-      axios.post('https://emailback-5jmh.onrender.com/register', { name, mail, pass }).then(res => {
+      axios.post('https://emailback-ylq9.onrender.com/register', { name, mail, pass }).then(res => {
         isLoading("False")
         alert(res.data);
         Navigate('/');

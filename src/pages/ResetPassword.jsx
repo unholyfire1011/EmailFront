@@ -86,7 +86,7 @@ const ResetPassword = () => {
     if(password !== cpass){
         alert("Passwords Dont Match!!")
     }else{
-        axios.post('https://emailback-5jmh.onrender.com/resetPass', {username,password}).then(res=>{
+        axios.post('https://emailback-ylq9.onrender.com/resetPass', {username,password}).then(res=>{
             if(res.status != 200){
                 alert(res.data);
                 Navigate("/");

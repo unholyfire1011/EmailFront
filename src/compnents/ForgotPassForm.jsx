@@ -63,7 +63,7 @@ const ForgotPassForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('https://emailback-5jmh.onrender.com/forgotPass', {username}).then(res=>{
+    axios.post('https://emailback-ylq9.onrender.com/forgotPass', {username}).then(res=>{
       alert(res.data);
       Navigate('/');
     })

@@ -172,7 +172,7 @@ const Expand = () => {
 
   let attachment;
   if (state.p.item.file) {
-    attachment = <img src={"https://emailback-ylq9.onrender.com/" + state.p.item.file} style={styles.img}></img>
+    attachment = <img src={state.p.item.file} style={styles.img}></img>
   } else {
     attachment = <h6>No attachment</h6>
   }

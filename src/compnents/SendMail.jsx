@@ -106,7 +106,8 @@ const SendMail = () => {
     formData.append('to', to);
     formData.append('encryptedData', encryptedData);
     formData.append('file',file);
-    axios.post('https://emailback-5jmh.onrender.com/sendMsg', formData).then(res=>{
+
+    axios.post('http://localhost:3001/sendMsg', formData).then(res=>{
         if(res.status == 200){
           setLoading("False");
           alert(res.data);

@@ -29,7 +29,7 @@ const NavBar = () => {
     <a href="/sent">Sent</a>
     <a href="/spam">Spam</a>
     <a href="/blocked">Blocked</a>
-    <a href="http://localhost:5173" onChange={Logout}>Logout</a>
+    <a href="https://emailsys.netlify.app/" onChange={Logout}>Logout</a>
   </div>
 </div>
   )
